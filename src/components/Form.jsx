@@ -7,13 +7,9 @@ const Form = () => {
   const [data, setData] = useState("");
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
-
+  //THIS HAPPENS ON PAGE LOAD
+  //=========================
   useEffect(() => {
-    // const fetchData = async () => {
-    //   let greetings = await axios.get("./");
-    //   let data = await greetings.json();
-    //   console.log(data);
-    // };
     const fetchData = async () => {
       // let greetings = await fetch("http://localhost:3005/page1");
       let greetings = await axios.get("./");
@@ -23,20 +19,28 @@ const Form = () => {
     fetchData();
   }, []);
 
-  console.log(data);
-
-  // const handleOnClick = (e) => {
-  //   alert(`This ${e.target.type} has been clicked`);
-  // };
-
-  // const handleOnHover = (e) => {
-  //   console.log(e);
-  //   alert(`This ${e.target.className} has been hovered upon`);
-  // };
+  // To confirm the data has been posted
+  // console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Your name is ${name} and your email is ${email}`);
+    let data = {
+      name: name,
+      email: email,
+    };
+    axios
+      .post("./email", {
+        headers: { "Content-Type": "application.json" },
+        body: JSON.stringify(data),
+      })
+      .then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
   return (
     <>
@@ -71,7 +75,7 @@ const Form = () => {
                 class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
                 for="inline-password"
               >
-                Password
+                Email
               </label>
             </div>
             <div class="md:w-2/3">
