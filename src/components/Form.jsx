@@ -4,34 +4,33 @@ import Button from "./Button";
 import axios from "../axios";
 
 const Form = () => {
-  const [data, setData] = useState("");
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
   //THIS HAPPENS ON PAGE LOAD
   //=========================
-  useEffect(() => {
-    const fetchData = async () => {
-      // let greetings = await fetch("http://localhost:3005/page1");
-      let greetings = await axios.get("./");
-      let data = await greetings.data;
-      setData(data);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     // let greetings = await fetch("http://localhost:3005/page1");
+  //     let greetings = await axios.get("./");
+  //     let data = await greetings.data;
+  //     setData(data);
+  //   };
+  //   fetchData();
+  // }, []);\
 
   // To confirm the data has been posted
   // console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let data = {
+    let info = {
       name: name,
       email: email,
     };
+    console.log(info);
     axios
-      .post("./email", {
-        headers: { "Content-Type": "application.json" },
-        body: JSON.stringify(data),
+      .post("/email", info, {
+        headers: { "Content-Type": "application/json" },
       })
       .then(
         (response) => {
