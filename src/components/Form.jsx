@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Paragraph from "./Paragraph";
 import Button from "./Button";
 import axios from "../axios";
 
@@ -7,21 +6,18 @@ const Form = () => {
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
   const [data, setData] = useState(" ");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   //THIS HAPPENS ON PAGE LOAD
   //=========================
   useEffect(() => {
     const fetchData = async () => {
-      // let greetings = await fetch("http://localhost:3005/page1");
       let greetings = await axios.get("./");
       let data = await greetings.data;
       setData(data);
     };
     fetchData();
   }, []);
-
-  // To confirm the data has been posted
-  // console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,6 +29,7 @@ const Form = () => {
     axios.post("/email", info).then(
       (response) => {
         console.log(response.data);
+        setIsSubmitted("true");
       },
       (error) => {
         console.log(error);
@@ -105,11 +102,8 @@ const Form = () => {
               </div>
             </div>
           </div>
+          {isSubmitted && <p>The form has been submitted successfully.</p>}
         </form>
-
-        {/* <div className="p-5">
-          <Paragraph />
-        </div> */}
       </div>
     </>
   );
