@@ -6,17 +6,19 @@ import axios from "../axios";
 const Form = () => {
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
+  const [data, setData] = useState(" ");
+
   //THIS HAPPENS ON PAGE LOAD
   //=========================
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     // let greetings = await fetch("http://localhost:3005/page1");
-  //     let greetings = await axios.get("./");
-  //     let data = await greetings.data;
-  //     setData(data);
-  //   };
-  //   fetchData();
-  // }, []);\
+  useEffect(() => {
+    const fetchData = async () => {
+      // let greetings = await fetch("http://localhost:3005/page1");
+      let greetings = await axios.get("./");
+      let data = await greetings.data;
+      setData(data);
+    };
+    fetchData();
+  }, []);
 
   // To confirm the data has been posted
   // console.log(data);
@@ -28,21 +30,18 @@ const Form = () => {
       email: email,
     };
     console.log(info);
-    axios
-      .post("/email", info, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    axios.post("/email", info).then(
+      (response) => {
+        console.log(response.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
   return (
     <>
+      {data}
       <div className=" p-5 flex flex-col content-center items-center justify-center">
         <form class="w-full max-w-sm" onSubmit={handleSubmit}>
           <div class="md:flex md:items-center mb-6">
