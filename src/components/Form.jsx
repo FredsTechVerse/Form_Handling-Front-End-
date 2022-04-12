@@ -41,8 +41,8 @@ const Form = () => {
   };
   return (
     <>
-      {data}
       <div className=" p-5 flex flex-col content-center items-center justify-center">
+        <p className="px-3 py-5">{data}</p>
         <form class="w-full max-w-sm" onSubmit={handleSubmit}>
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
