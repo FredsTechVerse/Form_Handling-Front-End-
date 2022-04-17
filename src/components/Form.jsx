@@ -5,6 +5,7 @@ import axios from "../axios";
 const Form = () => {
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
+  const [newsLetter, setNewsLetter] = useState(false);
   const [data, setData] = useState(" ");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -24,6 +25,7 @@ const Form = () => {
     let info = {
       name: name,
       email: email,
+      newsLetter: newsLetter,
     };
     console.log(info);
     axios.post("/email", info).then(
@@ -90,7 +92,14 @@ const Form = () => {
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3"></div>
             <label class="md:w-2/3 block text-gray-500 font-bold">
-              <input class="mr-2 leading-tight" type="checkbox" />
+              <input
+                class="mr-2 leading-tight"
+                type="checkbox"
+                value={newsLetter}
+                onClick={(e) => {
+                  setNewsLetter(!newsLetter);
+                }}
+              />
               <span class="text-sm">Send me your newsletter!</span>
             </label>
           </div>
