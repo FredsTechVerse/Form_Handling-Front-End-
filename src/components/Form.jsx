@@ -6,7 +6,7 @@ const Form = () => {
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
   const [newsLetter, setNewsLetter] = useState(false);
-  const [data, setData] = useState(" ");
+  const [connectionTest, setConnectionTest] = useState(" ");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   //THIS HAPPENS ON PAGE LOAD
@@ -15,7 +15,7 @@ const Form = () => {
     const fetchData = async () => {
       let greetings = await axios.get("./");
       let data = await greetings.data;
-      setData(data);
+      setConnectionTest(data);
     };
     fetchData();
   }, []);
@@ -31,7 +31,10 @@ const Form = () => {
     axios.post("/email", info).then(
       (response) => {
         console.log(response.data);
-        setIsSubmitted("true");
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 3000);
       },
       (error) => {
         console.log(error);
@@ -41,7 +44,9 @@ const Form = () => {
   return (
     <>
       <div className=" p-5 flex flex-col content-center items-center justify-center">
-        <p className="px-3 py-5">{data}</p>
+        <p className="px-2 py-auto my-2 bg-yellow-300 text-stone-500  rounded-sm">
+          {connectionTest}
+        </p>
         <form class="w-full max-w-sm" onSubmit={handleSubmit}>
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
@@ -111,7 +116,13 @@ const Form = () => {
               </div>
             </div>
           </div>
-          {isSubmitted && <p>The form has been submitted successfully.</p>}
+          {isSubmitted ? (
+            <p className="bg-yellow-300 text-stone-500">
+              The form has been submitted successfully.
+            </p>
+          ) : (
+            " "
+          )}
         </form>
       </div>
     </>
