@@ -12,12 +12,21 @@ const Form = () => {
   //THIS HAPPENS ON PAGE LOAD
   //=========================
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchEmails = async () => {
       let greetings = await axios.get("./");
       let data = await greetings.data;
       setConnectionTest(data);
+      let emails = await axios.get("./email");
+      console.log(emails);
     };
-    fetchData();
+
+    const fetchContacts = async () => {
+      let contacts = await axios.get("./contacts");
+      console.log(contacts);
+    };
+
+    fetchEmails();
+    fetchContacts();
   }, []);
 
   const handleSubmit = (e) => {
@@ -28,18 +37,34 @@ const Form = () => {
       newsLetter: newsLetter,
     };
     console.log(info);
-    axios.post("/email", info).then(
-      (response) => {
+    try {
+      axios.post("/email", info).then((response) => {
         console.log(response.data);
         setIsSubmitted(true);
         setTimeout(() => {
           setIsSubmitted(false);
         }, 3000);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    let info = {
+      name: name,
+      email: email,
+      newsLetter: newsLetter,
+    };
+    console.log(info);
+    try {
+      axios.delete("/email", info).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -47,7 +72,7 @@ const Form = () => {
         <p className="px-2 py-auto my-2 bg-yellow-300 text-stone-500  rounded-sm">
           {connectionTest}
         </p>
-        <form class="w-full max-w-sm" onSubmit={handleSubmit}>
+        <form class="w-full max-w-sm">
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
               <label
@@ -110,9 +135,12 @@ const Form = () => {
           </div>
           <div class="md:flex md:items-center">
             <div class="md:w-1/3"></div>
-            <div class="md:w-2/3">
-              <div className="p-5">
-                <Button type="button" text="Submit" />
+            <div class="md:w-2/3 flex flex-row  ">
+              <div class="mx-5">
+                <Button type="button" text="Submit" onClick={handleSubmit} />
+              </div>
+              <div class="mx-5">
+                <Button type="button" text="Delete" onClick={handleDelete} />
               </div>
             </div>
           </div>
