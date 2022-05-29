@@ -61,19 +61,35 @@ function App() {
             </h1>
           </div>
 
-          <div className="p-5 flex flex-col content-center items-center justify-center">
-            <table className="table-fixed">
-              <thead className="bg-slate-500 border-b-2 border-gray-200">
+          <div className="p-5 flex flex-col content-center items-center justify-center overflow-auto ">
+            <table className="table-auto shadow shadow-gray-900">
+              <thead className="bg-slate-700 text-white border-gray-200 rounded-2xl">
                 <tr>
-                  <th className="w-40 p-5 tracking-wider">Name</th>
-                  <th className="p-5 tracking-wider">Email</th>
+                  <th className="w-60 p-5 tracking-wider">Name</th>
+                  <th className="w-20 p-5 tracking-wider">Email</th>
+                  <th className="w-20 p-5 tracking-wider">Connect</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {emails.map((email) => (
+                {emails.map(({ email, name, newsLetter: contact }) => (
                   <tr>
-                    <td className="px-5 py-2">{email.name}</td>
-                    <td className="px-5 py-2">{email.email}</td>
+                    <td className="px-5 py-2">{name}</td>
+                    <td className="px-5 py-2">
+                      <a
+                        href={"mailto:" + email}
+                        className="bg-rose-600 text-white px-2 py-1 rounded-lg"
+                      >
+                        Email
+                      </a>
+                    </td>
+                    <td className="px-5 py-2">
+                      <a
+                        href={"tel:" + contact}
+                        className="bg-green-500 text-white px-3 py-1 rounded-lg"
+                      >
+                        Call
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>
