@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import axios from "../axios";
 
 const Form = () => {
   // DECLARATION OF VARIABLES
   //=========================
-  const [name, setName] = useState(" ");
-  const [email, setEmail] = useState(" ");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [response, setResponse] = useState("");
   const [responseTracker, setResponseTracker] = useState(false);
   const [newsLetter, setNewsLetter] = useState(false);
@@ -14,11 +14,10 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let info = {
-      name: name,
-      email: email,
-      newsLetter: newsLetter,
+      name,
+      email,
+      newsLetter,
     };
-    console.log(info);
     try {
       axios.post("/email", info).then((response) => {
         setResponse(response.data);
@@ -26,7 +25,6 @@ const Form = () => {
         setTimeout(() => {
           setResponseTracker(false);
         }, 3000);
-        console.log(response);
       });
     } catch (error) {
       setResponse(error);
@@ -34,16 +32,15 @@ const Form = () => {
       setTimeout(() => {
         setResponseTracker(false);
       }, 3000);
-      console.log(error);
     }
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     let info = {
-      name: name,
-      email: email,
-      newsLetter: newsLetter,
+      name,
+      email,
+      newsLetter,
     };
     try {
       axios.delete(`/email/${info.name}`).then((response) => {
@@ -65,7 +62,7 @@ const Form = () => {
     <>
       <div className="flex justify-center">
         <h1 className="font-extrabold underline text-2xl content-center py-5 ">
-          SAMPLE DATA COLLECTION FORM
+          SAMPLE OF A DATA COLLECTION FORM
         </h1>
       </div>
       <div className=" p-5 flex flex-col content-center items-center justify-center">
@@ -132,7 +129,7 @@ const Form = () => {
           </div>
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
-            <div className="md:w-2/3 flex flex-row w-full justify-between ">
+            <div className="md:w-2/3 flex flex-row w-full justify-evenly hover:justify-between ">
               <div className="mx-5">
                 <Button type="button" text="Submit" onClick={handleSubmit} />
               </div>

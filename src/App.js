@@ -4,12 +4,10 @@ import axios from "./axios";
 import Form from "./components/Form";
 function App() {
   const [emails, setEmails] = useState([]);
-  const [contacts, setContacts] = useState(" ");
   const [dataTracker, setDataTracker] = useState(false);
   const [viewTracker, setViewTracker] = useState(false);
   const [dataMessage, setDataMessage] = useState("");
   const [tableTracker, setTableTracker] = useState(false);
-  const [view, setView] = useState("");
 
   //THIS HAPPENS ON PAGE LOAD
   //=========================
@@ -26,6 +24,7 @@ function App() {
         setTimeout(() => {
           setDataTracker(false);
           setViewTracker(true);
+          setTableTracker(true);
         }, 2000);
       } catch (error) {
         setDataMessage(
@@ -38,20 +37,10 @@ function App() {
         setViewTracker(true);
       }, 2000);
     };
-    // A FUNCTION THAT FETCHES THE CONTACTS IN OUR DATABASE.
-    //=====================================================
-    const Contacts = async () => {
-      let contacts = await axios.get("./contacts");
-      try {
-        setContacts(contacts);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     Emails();
-    Contacts();
   }, []);
+
   return (
     <>
       {/* CONDITIONAL RENDERING IN ITS GLORY.
@@ -68,7 +57,7 @@ function App() {
         <>
           <div className="flex justify-center">
             <h1 className="font-bold underline text-2xl content-center py-5 ">
-              SUMMARIZED DATA
+              INFORMATION STORED IN THE DATABASE
             </h1>
           </div>
 
@@ -78,15 +67,13 @@ function App() {
                 <tr>
                   <th className="w-40 p-5 tracking-wider">Name</th>
                   <th className="p-5 tracking-wider">Email</th>
-                  <th className="w-40 p-5 tracking-wider">Subscription</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-400">
+              <tbody className="divide-y divide-gray-100">
                 {emails.map((email) => (
                   <tr>
                     <td className="px-5 py-2">{email.name}</td>
                     <td className="px-5 py-2">{email.email}</td>
-                    <td className="px-5 py-2">{email.newsLetter}</td>
                   </tr>
                 ))}
               </tbody>
